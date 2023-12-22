@@ -51,49 +51,69 @@ async function loadData() {
     renderTable(TABLE_DATA)
 }
 
-async function fetchApiData(url) {
-    return await fetch(url).then((res) => { return res.json() }).then((data) => { return data }).catch((err) => { console.log(err) })
+async function fetchApiData(_url) {
+    return await fetch(_url)
+        .then((_res) => { return _res.json() })
+        .then((_data) => { return _data })
+        .catch((_err) => { console.log(_err) })
 }
 
-function renderTable(data) {
-    if (data.length > 0) {
+function renderTable(_data) {
+    if (_data.length > 0) {
         createTableHead()
-        createTableBody(data)
+        createTableBody(_data)
         enableSorting()
     }
 }
 
 function createTableHead() {
-    let theadDataString = '<tr>';
+    let _theadDataString = '<tr>';
     TABLE_CONFIG.forEach((el) => {
         if (el.isSortable) {
             SORT_COLUMN = el.dataKey
         }
-        theadDataString += `<th ${el.isSortable ? 'class="sortable"' : ''}>
+        _theadDataString += `<th ${el.isSortable ? 'class="sortable"' : ''}>
             <div>${el.columnName}${el.isSortable ? '<span class="sort-icon">&uarr;&darr;</span>' : ''}</div>
         </th>`
     })
-    theadDataString += '</tr>';
-    THEAD.innerHTML = theadDataString
+    _theadDataString += '</tr>';
+    THEAD.innerHTML = _theadDataString
 }
 
-function createTableBody(data) {
-    let tBodyDataString = ''
-    data.forEach((el) => {
-        tBodyDataString += '<tr>'
-        TABLE_CONFIG.forEach((col) => {
-            tBodyDataString += `<td>${el[col.dataKey]}</td>`
+function createTableBody(_data) {
+    let _tBodyDataString = ''
+    _data.forEach((_el) => {
+        _tBodyDataString += '<tr>'
+        TABLE_CONFIG.forEach((_col) => {
+            let _colValue = _col.dataKey
+            if (_col.dataKey.includes('.')) {
+                _colValue = scanNestedKeyValue(_el, _col.dataKey)
+            }
+            _tBodyDataString += `<td>${_colValue}</td>`
         })
-        tBodyDataString += '</tr>'
+        _tBodyDataString += '</tr>'
     })
-    TBODY.innerHTML = tBodyDataString
+    TBODY.innerHTML = _tBodyDataString
+}
+
+function scanNestedKeyValue(_dataRow, _colKey) {
+    let _tempColKey = _colKey
+    let _tempDataRow = _dataRow
+    let _keyArr = []
+    do {
+        _keyArr = _tempColKey.split('.')
+        _tempDataRow = _tempDataRow[_keyArr[0]]
+        _keyArr.shift()
+        _tempColKey = _keyArr.join('.')
+    } while (_keyArr.length > 0)
+    return _tempDataRow;
 }
 
 function enableSorting() {
-    document.querySelectorAll('.sortable').forEach((column) => {
-        column.addEventListener('click', function handleClick() {
+    document.querySelectorAll('.sortable').forEach((_col) => {
+        _col.addEventListener('click', function handleClick() {
             SORT_ORDER = SORT_ORDER > 0 ? -1 : 1
-            column.querySelectorAll('.sort-icon')[0].innerHTML = SORT_ORDER > 0 ? '&darr;' : '&uarr;'
+            _col.querySelectorAll('.sort-icon')[0].innerHTML = SORT_ORDER > 0 ? '&darr;' : '&uarr;'
             TABLE_DATA = sortData(TABLE_DATA)
             createTableBody(TABLE_DATA)
         });
@@ -118,7 +138,7 @@ function clearScreen() {
     SORT_ORDER = 1
 }
 
-function resetScreen(){
+function resetScreen() {
     clearScreen()
     initSettings()
 }
