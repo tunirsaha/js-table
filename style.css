@@ -16,13 +16,13 @@ th {
     background-color: #f0eaea;
 }
 
-th>div{
+th.sortable>div {
     display: flex;
     align-items: center;
     justify-content: space-between;
 }
 
-.sortable{
+.sortable {
     cursor: pointer;
 }
 
