@@ -37,8 +37,13 @@ function initSettings() {
 function getUserInput() {
     clearScreen()
     API_URL = document.getElementById('apiInput').value
-    TABLE_CONFIG = JSON.parse(document.getElementById('configInput').value)
-    loadData()
+    try {
+        TABLE_CONFIG = JSON.parse(document.getElementById('configInput').value)
+        loadData()
+    } catch (e) {
+        alert('You have an error in your JSON')
+        resetScreen()
+    }
 }
 
 async function loadData() {
@@ -111,4 +116,9 @@ function clearScreen() {
     API_URL = ''
     TABLE_CONFIG = {}
     SORT_ORDER = 1
+}
+
+function resetScreen(){
+    clearScreen()
+    initSettings()
 }

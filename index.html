@@ -19,17 +19,20 @@
                 <label for="search">Table Config: </label>
                 <textarea type="text" id="configInput"></textarea>
             </div>
-            <button onclick="getUserInput()">Load Data</button>
+            <button class="load-button" onclick="getUserInput()">Load Data</button>
+            <button class="reset-button" onclick="resetScreen()">Reset All</button>
         </div>
         <div class="table-container">
             <div class="search-input">
                 <label for="search">Search: </label>
                 <input type="text" id="search" />
             </div>
-            <table>
-                <thead id="thead"></thead>
-                <tbody id="tbody"></tbody>
-            </table>
+            <div>
+                <table>
+                    <thead id="thead"></thead>
+                    <tbody id="tbody"></tbody>
+                </table>
+            </div>
         </div>
     </div>
 </body>
