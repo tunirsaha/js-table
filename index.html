@@ -9,15 +9,30 @@
 </head>
 
 <body>
-    <div class="alert-wrapper" id="alert" style="display: none;"></div>
-    <div>
-        <label for="search">Search: </label>
-        <input type="text" id="search" />
+    <div class="container">
+        <div class="settings-panel">
+            <div class="url-input">
+                <label for="search">API Url: </label>
+                <input type="text" id="apiInput" />
+            </div>
+            <div>
+                <label for="search">Table Config: </label>
+                <textarea type="text" id="configInput"></textarea>
+            </div>
+            <button onclick="getUserInput()">Load Data</button>
+        </div>
+        <div class="table-container">
+            <div class="search-input">
+                <label for="search">Search: </label>
+                <input type="text" id="search" />
+            </div>
+            <table>
+                <thead id="thead"></thead>
+                <tbody id="tbody"></tbody>
+            </table>
+        </div>
     </div>
-    <table>
-        <thead id="thead"></thead>
-        <tbody id="tbody"></tbody>
-    </table>
 </body>
 <script src="script.js" defer></script>
+
 </html>
