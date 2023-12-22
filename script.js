@@ -35,7 +35,7 @@ function initSettings() {
 }
 
 function getUserInput() {
-    cleanSlate()
+    clearScreen()
     API_URL = document.getElementById('apiInput').value
     TABLE_CONFIG = JSON.parse(document.getElementById('configInput').value)
     loadData()
@@ -104,7 +104,7 @@ function sortData(_data) {
     })
 }
 
-function cleanSlate() {
+function clearScreen() {
     THEAD.innerHTML = ''
     TBODY.innerHTML = ''
     SORT_COLUMN = ''
